@@ -15,197 +15,118 @@
     padding-bottom: 6rem;
     touch-action: manipulation;
   }
-  .header {
-    max-width: 700px;
-    margin: 0 auto 1.2rem;
-    padding-top: 0.5rem;
-  }
+  .header { max-width: 700px; margin: 0 auto 1.2rem; padding-top: 0.5rem; }
   h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 8px;
   }
   h1 .badge {
-    font-size: 0.7rem;
-    background: #2e7d4e;
-    color: white;
-    padding: 0.2rem 0.6rem;
-    border-radius: 40px;
-    font-weight: 600;
+    font-size: 0.7rem; background: #2e7d4e; color: white;
+    padding: 0.2rem 0.6rem; border-radius: 40px; font-weight: 600;
     letter-spacing: 0.03em;
   }
-  .sub {
-    color: #7b8ea3;
-    font-size: 0.9rem;
-    margin-top: 0.3rem;
-  }
+  .sub { color: #7b8ea3; font-size: 0.9rem; margin-top: 0.3rem; }
 
-  /* ---- input row ---- */
-  .input-row {
-    max-width: 700px;
-    margin: 0 auto 1.5rem;
-    display: flex;
-    gap: 0.6rem;
-  }
+  /* input */
+  .input-row { max-width: 700px; margin: 0 auto 1.5rem; display: flex; gap: 0.6rem; }
   .input-row input {
-    flex: 1;
-    background: #1a2330;
-    border: 1px solid #2a3442;
-    border-radius: 1rem;
-    padding: 1rem 1.2rem;
-    font-size: 1.1rem;
-    color: #eef3fc;
-    outline: none;
-    font-family: inherit;
-    min-width: 0;
+    flex: 1; background: #1a2330; border: 1px solid #2a3442;
+    border-radius: 1rem; padding: 1rem 1.2rem; font-size: 1.1rem;
+    color: #eef3fc; outline: none; font-family: inherit; min-width: 0;
   }
-  .input-row input:focus {
-    border-color: #4f9e6f;
-    background: #1c2734;
-  }
+  .input-row input:focus { border-color: #4f9e6f; background: #1c2734; }
   .input-row input::placeholder { color: #556c84; }
   .input-row button {
-    background: #2e7d4e;
-    border: none;
-    color: white;
-    font-size: 1.6rem;
-    font-weight: 600;
-    width: 56px;
-    border-radius: 1rem;
-    cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    background: #2e7d4e; border: none; color: white; font-size: 1.6rem;
+    font-weight: 600; width: 56px; border-radius: 1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.15s, transform 0.1s;
   }
-  .input-row button:active {
-    background: #256b41;
-    transform: scale(0.96);
-  }
+  .input-row button:active { background: #256b41; transform: scale(0.96); }
 
-  /* ---- player grid ---- */
-  .grid {
-    max-width: 700px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
+  /* stats bar */
+  .stats {
+    max-width: 700px; margin: 0 auto 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 0.4rem; font-size: 0.85rem; color: #7b8ea3;
   }
+  .stats .clearbtn {
+    background: none; border: 1px solid #2a3442; color: #7b8ea3;
+    padding: 0.3rem 0.8rem; border-radius: 40px; font-size: 0.8rem;
+    cursor: pointer; font-family: inherit;
+  }
+  .stats .clearbtn:active { background: #1f2938; }
+
+  /* grid */
+  .grid { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.8rem; }
   .player {
-    background: #151c26;
-    border-radius: 1.4rem;
-    padding: 1rem 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    border: 1px solid #2a3442;
-    cursor: pointer;
+    background: #151c26; border-radius: 1.4rem; padding: 1rem 1.2rem;
+    display: flex; align-items: center; gap: 0.9rem;
+    border: 1px solid #2a3442; cursor: pointer;
     transition: background 0.15s, border-color 0.15s, transform 0.1s;
     user-select: none;
   }
   .player:hover { background: #1b232f; border-color: #3f5066; }
   .player:active { transform: scale(0.99); background: #1f2938; }
-  .player.copied {
-    border-color: #4f9e6f;
-    background: #182a20;
-  }
+  .player.copied { border-color: #4f9e6f; background: #182a20; }
+  .player.done { opacity: 0.55; }
+  .player.done .uid { text-decoration: line-through; text-decoration-color: #4f9e6f; }
 
-  .player .avatar {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: #2e4057;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 1rem;
-    color: #b6cde3;
-    flex-shrink: 0;
+  /* tick box */
+  .tick {
+    width: 34px; height: 34px; border-radius: 10px;
+    border: 2px solid #3f5066; background: #1a2330;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.15s, border-color 0.15s;
+    font-size: 1.1rem; color: transparent;
   }
-  .player .info {
-    flex: 1;
-    min-width: 0;
+  .tick.on { background: #2e7d4e; border-color: #2e7d4e; color: white; }
+
+  .avatar {
+    width: 42px; height: 42px; border-radius: 50%; background: #2e4057;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1rem; color: #b6cde3; flex-shrink: 0;
   }
-  .player .name {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #7b8ea3;
-    font-weight: 500;
+  .info { flex: 1; min-width: 0; }
+  .name {
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;
+    color: #7b8ea3; font-weight: 500;
   }
-  .player .uid {
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: #eef3fc;
-    word-break: break-all;
-    line-height: 1.25;
+  .uid {
+    font-size: 1.35rem; font-weight: 700; color: #eef3fc;
+    word-break: break-all; line-height: 1.25;
     font-family: ui-monospace, 'SF Mono', Menlo, monospace;
   }
-  .player .del {
-    background: #2a1e1e;
-    color: #d98a8a;
-    border: none;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    cursor: pointer;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.15s;
-  }
-  .player .del:active { background: #4a2a2a; }
-  .player .copy-hint {
-    font-size: 1.4rem;
-    color: #556c84;
-    flex-shrink: 0;
-  }
+  .copy-hint { font-size: 1.4rem; color: #556c84; flex-shrink: 0; }
   .player.copied .copy-hint { color: #4f9e6f; }
 
-  /* ---- empty state ---- */
-  .empty {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: #556c84;
+  .del {
+    background: #2a1e1e; color: #d98a8a; border: none;
+    width: 38px; height: 38px; border-radius: 50%; font-size: 1.2rem;
+    cursor: pointer; flex-shrink: 0; display: flex; align-items: center;
+    justify-content: center; transition: background 0.15s;
   }
+  .del:active { background: #4a2a2a; }
+
+  /* empty */
+  .empty { text-align: center; padding: 3rem 1rem; color: #556c84; }
   .empty .big { font-size: 3rem; margin-bottom: 0.5rem; }
 
-  /* ---- toast ---- */
+  /* toast */
   .toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
+    position: fixed; bottom: 30px; left: 50%;
     transform: translateX(-50%) translateY(20px);
-    background: rgba(240, 248, 255, 0.96);
-    color: #0b0f17;
-    padding: 0.8rem 2rem;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 1rem;
-    opacity: 0;
-    transition: opacity 0.2s, transform 0.2s;
-    pointer-events: none;
-    z-index: 999;
-    box-shadow: 0 12px 25px -8px black;
-    white-space: nowrap;
+    background: rgba(240, 248, 255, 0.96); color: #0b0f17;
+    padding: 0.8rem 2rem; border-radius: 50px; font-weight: 700;
+    font-size: 1rem; opacity: 0; transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none; z-index: 999;
+    box-shadow: 0 12px 25px -8px black; white-space: nowrap;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* ---- footer note ---- */
   .note {
-    max-width: 700px;
-    margin: 2rem auto 0;
-    text-align: center;
-    color: #556c84;
-    font-size: 0.8rem;
-    line-height: 1.5;
+    max-width: 700px; margin: 2rem auto 0; text-align: center;
+    color: #556c84; font-size: 0.8rem; line-height: 1.5;
   }
 </style>
 </head>
@@ -213,7 +134,7 @@
 
 <div class="header">
   <h1>Clash of Critters <span class="badge">UID TAPPER</span></h1>
-  <div class="sub">Add player UIDs → tap any card to copy instantly</div>
+  <div class="sub">Tick ✓ when done · tap the UID to copy</div>
 </div>
 
 <div class="input-row">
@@ -221,21 +142,30 @@
   <button id="addBtn" aria-label="Add UID">+</button>
 </div>
 
+<div class="stats" id="stats" style="display:none;">
+  <span id="statsText">0 / 0 done</span>
+  <button class="clearbtn" id="clearTicks">Clear all ticks</button>
+</div>
+
 <div class="grid" id="grid"></div>
 
 <div class="toast" id="toast">✓ copied!</div>
 
 <div class="note">
-  Saved automatically on this device. Tap 🗑 to remove a player.
+  Saved automatically on this device. Tap the tick to mark done · tap the card to copy · 🗑 to remove.
 </div>
 
 <script>
 (function () {
-  const STORAGE_KEY = 'coc_uid_list_v1';
+  const STORAGE_KEY = 'coc_uid_list_v2';   // v2 = new format with tick support
+  const OLD_KEY = 'coc_uid_list_v1';       // auto-migrate old data
   const input = document.getElementById('uidInput');
   const addBtn = document.getElementById('addBtn');
   const grid = document.getElementById('grid');
   const toastEl = document.getElementById('toast');
+  const statsEl = document.getElementById('stats');
+  const statsText = document.getElementById('statsText');
+  const clearTicksBtn = document.getElementById('clearTicks');
 
   let players = [];
 
@@ -243,7 +173,17 @@
   function load() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      players = raw ? JSON.parse(raw) : [];
+      if (raw) {
+        players = JSON.parse(raw);
+      } else {
+        // migrate from v1 (no tick field)
+        const oldRaw = localStorage.getItem(OLD_KEY);
+        if (oldRaw) {
+          const old = JSON.parse(oldRaw);
+          players = old.map(p => ({ name: p.name || '', uid: p.uid, done: false }));
+          save();
+        }
+      }
       if (!Array.isArray(players)) players = [];
     } catch (e) { players = []; }
   }
@@ -254,10 +194,8 @@
   /* ---------- clipboard ---------- */
   async function copyText(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      try {
-        await navigator.clipboard.writeText(text);
-        return true;
-      } catch (e) { /* fall through */ }
+      try { await navigator.clipboard.writeText(text); return true; }
+      catch (e) {}
     }
     try {
       const ta = document.createElement('textarea');
@@ -284,11 +222,19 @@
     toastTimer = setTimeout(() => toastEl.classList.remove('show'), 1400);
   }
 
+  /* ---------- helpers ---------- */
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
   /* ---------- render ---------- */
   function render() {
     grid.innerHTML = '';
 
     if (players.length === 0) {
+      statsEl.style.display = 'none';
       const empty = document.createElement('div');
       empty.className = 'empty';
       empty.innerHTML = '<div class="big">🐾</div><div>No UIDs yet. Add one above.</div>';
@@ -296,14 +242,19 @@
       return;
     }
 
+    // stats
+    statsEl.style.display = 'flex';
+    const doneCount = players.filter(p => p.done).length;
+    statsText.textContent = `${doneCount} / ${players.length} done`;
+
     players.forEach((p, idx) => {
       const card = document.createElement('div');
-      card.className = 'player';
+      card.className = 'player' + (p.done ? ' done' : '');
 
-      // avatar = first 2 chars of UID
       const initials = (p.uid || '?').slice(0, 2).toUpperCase();
 
       card.innerHTML = `
+        <div class="tick ${p.done ? 'on' : ''}" data-action="tick">✓</div>
         <div class="avatar">${escapeHtml(initials)}</div>
         <div class="info">
           <div class="name">${escapeHtml(p.name || 'Player')}</div>
@@ -313,16 +264,26 @@
         <button class="del" aria-label="Delete">🗑</button>
       `;
 
-      // tap card = copy UID
+      // tap card = copy UID (unless they tapped tick or delete)
       card.addEventListener('click', async (e) => {
-        if (e.target.closest('.del')) return; // delete button handled separately
+        if (e.target.closest('.del')) return;
+        if (e.target.closest('.tick')) return;
         card.classList.add('copied');
         setTimeout(() => card.classList.remove('copied'), 700);
         const ok = await copyText(p.uid);
         showToast(ok ? '✓ UID copied!' : '⚠️ Copy failed');
       });
 
-      // delete button
+      // tick box toggle
+      card.querySelector('.tick').addEventListener('click', (e) => {
+        e.stopPropagation();
+        players[idx].done = !players[idx].done;
+        save();
+        render();
+        showToast(players[idx].done ? '✓ Marked done' : 'Unmarked');
+      });
+
+      // delete
       card.querySelector('.del').addEventListener('click', (e) => {
         e.stopPropagation();
         players.splice(idx, 1);
@@ -335,35 +296,26 @@
     });
   }
 
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    }[c]));
-  }
-
   /* ---------- add player ---------- */
   function addPlayer() {
     const val = input.value.trim();
     if (!val) { input.focus(); return; }
 
-    // optional: name + uid separated by "|"  e.g. "Bob|123456"
     let name = '', uid = val;
     if (val.includes('|')) {
       const parts = val.split('|');
       name = parts[0].trim();
       uid = parts[1].trim();
     }
-
     if (!uid) return;
 
-    // prevent duplicates
     if (players.some(p => p.uid === uid)) {
       showToast('UID already added');
       input.value = '';
       return;
     }
 
-    players.push({ name, uid });
+    players.push({ name, uid, done: false });
     save();
     render();
     input.value = '';
@@ -372,8 +324,16 @@
   }
 
   addBtn.addEventListener('click', addPlayer);
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') addPlayer();
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') addPlayer(); });
+
+  /* ---------- clear all ticks ---------- */
+  clearTicksBtn.addEventListener('click', () => {
+    if (!players.some(p => p.done)) { showToast('Nothing ticked'); return; }
+    if (!confirm('Clear all ticks?')) return;
+    players.forEach(p => p.done = false);
+    save();
+    render();
+    showToast('All ticks cleared');
   });
 
   /* ---------- init ---------- */
