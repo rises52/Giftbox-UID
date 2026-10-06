@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Clash of Critters — UID Tapper</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: #0f1420;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    color: #eef3fc;
+    padding: 1rem;
+    padding-bottom: 6rem;
+    touch-action: manipulation;
+  }
+  .header {
+    max-width: 700px;
+    margin: 0 auto 1.2rem;
+    padding-top: 0.5rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h1 .badge {
+    font-size: 0.7rem;
+    background: #2e7d4e;
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 40px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  .sub {
+    color: #7b8ea3;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+  }
+
+  /* ---- input row ---- */
+  .input-row {
+    max-width: 700px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    gap: 0.6rem;
+  }
+  .input-row input {
+    flex: 1;
+    background: #1a2330;
+    border: 1px solid #2a3442;
+    border-radius: 1rem;
+    padding: 1rem 1.2rem;
+    font-size: 1.1rem;
+    color: #eef3fc;
+    outline: none;
+    font-family: inherit;
+    min-width: 0;
+  }
+  .input-row input:focus {
+    border-color: #4f9e6f;
+    background: #1c2734;
+  }
+  .input-row input::placeholder { color: #556c84; }
+  .input-row button {
+    background: #2e7d4e;
+    border: none;
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 600;
+    width: 56px;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .input-row button:active {
+    background: #256b41;
+    transform: scale(0.96);
+  }
+
+  /* ---- player grid ---- */
+  .grid {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .player {
+    background: #151c26;
+    border-radius: 1.4rem;
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    border: 1px solid #2a3442;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    user-select: none;
+  }
+  .player:hover { background: #1b232f; border-color: #3f5066; }
+  .player:active { transform: scale(0.99); background: #1f2938; }
+  .player.copied {
+    border-color: #4f9e6f;
+    background: #182a20;
+  }
+
+  .player .avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #2e4057;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #b6cde3;
+    flex-shrink: 0;
+  }
+  .player .info {
+    flex: 1;
+    min-width: 0;
+  }
+  .player .name {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #7b8ea3;
+    font-weight: 500;
+  }
+  .player .uid {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #eef3fc;
+    word-break: break-all;
+    line-height: 1.25;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  .player .del {
+    background: #2a1e1e;
+    color: #d98a8a;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+  }
+  .player .del:active { background: #4a2a2a; }
+  .player .copy-hint {
+    font-size: 1.4rem;
+    color: #556c84;
+    flex-shrink: 0;
+  }
+  .player.copied .copy-hint { color: #4f9e6f; }
+
+  /* ---- empty state ---- */
+  .empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #556c84;
+  }
+  .empty .big { font-size: 3rem; margin-bottom: 0.5rem; }
+
+  /* ---- toast ---- */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(240, 248, 255, 0.96);
+    color: #0b0f17;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+    z-index: 999;
+    box-shadow: 0 12px 25px -8px black;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ---- footer note ---- */
+  .note {
+    max-width: 700px;
+    margin: 2rem auto 0;
+    text-align: center;
+    color: #556c84;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Clash of Critters <span class="badge">UID TAPPER</span></h1>
+  <div class="sub">Add player UIDs → tap any card to copy instantly</div>
+</div>
+
+<div class="input-row">
+  <input id="uidInput" type="text" inputmode="numeric" placeholder="Enter player UID…" autocomplete="off">
+  <button id="addBtn" aria-label="Add UID">+</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="toast" id="toast">✓ copied!</div>
+
+<div class="note">
+  Saved automatically on this device. Tap 🗑 to remove a player.
+</div>
+
+<script>
+(function () {
+  const STORAGE_KEY = 'coc_uid_list_v1';
+  const input = document.getElementById('uidInput');
+  const addBtn = document.getElementById('addBtn');
+  const grid = document.getElementById('grid');
+  const toastEl = document.getElementById('toast');
+
+  let players = [];
+
+  /* ---------- storage ---------- */
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      players = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(players)) players = [];
+    } catch (e) { players = []; }
+  }
+  function save() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(players)); } catch (e) {}
+  }
+
+  /* ---------- clipboard ---------- */
+  async function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (e) { /* fall through */ }
+    }
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.top = '-9999px';
+      ta.style.opacity = '0';
+      ta.setAttribute('readonly', '');
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) { return false; }
+  }
+
+  /* ---------- toast ---------- */
+  let toastTimer = null;
+  function showToast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 1400);
+  }
+
+  /* ---------- render ---------- */
+  function render() {
+    grid.innerHTML = '';
+
+    if (players.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'empty';
+      empty.innerHTML = '<div class="big">🐾</div><div>No UIDs yet. Add one above.</div>';
+      grid.appendChild(empty);
+      return;
+    }
+
+    players.forEach((p, idx) => {
+      const card = document.createElement('div');
+      card.className = 'player';
+
+      // avatar = first 2 chars of UID
+      const initials = (p.uid || '?').slice(0, 2).toUpperCase();
+
+      card.innerHTML = `
+        <div class="avatar">${escapeHtml(initials)}</div>
+        <div class="info">
+          <div class="name">${escapeHtml(p.name || 'Player')}</div>
+          <div class="uid">${escapeHtml(p.uid)}</div>
+        </div>
+        <div class="copy-hint">📋</div>
+        <button class="del" aria-label="Delete">🗑</button>
+      `;
+
+      // tap card = copy UID
+      card.addEventListener('click', async (e) => {
+        if (e.target.closest('.del')) return; // delete button handled separately
+        card.classList.add('copied');
+        setTimeout(() => card.classList.remove('copied'), 700);
+        const ok = await copyText(p.uid);
+        showToast(ok ? '✓ UID copied!' : '⚠️ Copy failed');
+      });
+
+      // delete button
+      card.querySelector('.del').addEventListener('click', (e) => {
+        e.stopPropagation();
+        players.splice(idx, 1);
+        save();
+        render();
+        showToast('Removed');
+      });
+
+      grid.appendChild(card);
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  /* ---------- add player ---------- */
+  function addPlayer() {
+    const val = input.value.trim();
+    if (!val) { input.focus(); return; }
+
+    // optional: name + uid separated by "|"  e.g. "Bob|123456"
+    let name = '', uid = val;
+    if (val.includes('|')) {
+      const parts = val.split('|');
+      name = parts[0].trim();
+      uid = parts[1].trim();
+    }
+
+    if (!uid) return;
+
+    // prevent duplicates
+    if (players.some(p => p.uid === uid)) {
+      showToast('UID already added');
+      input.value = '';
+      return;
+    }
+
+    players.push({ name, uid });
+    save();
+    render();
+    input.value = '';
+    input.focus();
+    showToast('✓ Added!');
+  }
+
+  addBtn.addEventListener('click', addPlayer);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') addPlayer();
+  });
+
+  /* ---------- init ---------- */
+  load();
+  render();
+})();
+</script>
+</body>
+</html>
